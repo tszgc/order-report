@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `vertx`.`t_order_detail` (
   `order_id` INT NOT NULL COMMENT '订单ID',
   `price` DECIMAL(9,2) NOT NULL COMMENT '价格',
   `num` INT NOT NULL COMMENT '数量',
-  `goods_id` INT NOT NULL COMMENT '商品ID',
+  `goods_id` BIGINT NOT NULL COMMENT '商品ID',
   `create_at` DATETIME NOT NULL COMMENT '创建时间',
   `update_at` DATETIME NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
