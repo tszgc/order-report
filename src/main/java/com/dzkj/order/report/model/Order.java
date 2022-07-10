@@ -1,4 +1,4 @@
-package com.dzkj.order_report.model;
+package com.dzkj.order.report.model;
 
 import io.vertx.core.json.JsonObject;
 import io.vertx.sqlclient.Row;

@@ -1,4 +1,4 @@
-package com.dzkj.order_report.model;
+package com.dzkj.order.report.model;
 
 import io.vertx.core.json.JsonObject;
 import io.vertx.sqlclient.Row;
@@ -9,27 +9,30 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Data
-public class ReportOrder {
+public class OrderDetail {
 
     private Long id;
 
     private Long orderId;
 
-    private Integer totalNum;
+    private BigDecimal price;
 
-    private BigDecimal totalAmount;
+    private Integer num;
+
+    private Long goodsId;
 
     private LocalDateTime createAt;
 
     private LocalDateTime updateAt;
 
-    public ReportOrder() {}
+    public OrderDetail() {}
 
-    public ReportOrder(Row row) {
+    public OrderDetail(Row row) {
         this.id = row.getLong("id");
         this.orderId = row.getLong("orderId");
-        this.totalNum = row.getInteger("totalNum");
-        this.totalAmount = row.getBigDecimal("totalAmount");
+        this.price = row.getBigDecimal("price");
+        this.num = row.getInteger("num");
+        this.goodsId = row.getLong("goodsId");
         this.createAt = row.getLocalDateTime("createAt");
         this.updateAt = row.getLocalDateTime("updateAt");
     }
@@ -37,8 +40,9 @@ public class ReportOrder {
     public JsonObject toJson() {
         return new JsonObject().put("id", this.id)
           .put("orderId", this.orderId)
-          .put("totalNum", this.totalNum)
-          .put("totalAmount", this.totalAmount)
+          .put("price", this.price)
+          .put("num", this.num)
+          .put("goodsId", goodsId)
           .put("createAt", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(this.createAt))
           .put("updateAt", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(this.updateAt));
     }

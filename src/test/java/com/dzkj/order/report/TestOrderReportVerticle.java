@@ -1,4 +1,4 @@
-package com.dzkj.order_report;
+package com.dzkj.order.report;
 
 import io.vertx.core.Vertx;
 import io.vertx.junit5.VertxExtension;
@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(VertxExtension.class)
-public class TestMainVerticle {
+public class TestOrderReportVerticle {
 
   @BeforeEach
   void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
-    vertx.deployVerticle(new MainVerticle(), testContext.succeeding(id -> testContext.completeNow()));
+    vertx.deployVerticle(new OrderReportVerticle(), testContext.succeeding(id -> testContext.completeNow()));
   }
 
   @Test
