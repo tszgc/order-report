@@ -24,6 +24,9 @@
 
     <main.verticle>com.dzkj.order_report.MainVerticle</main.verticle>
     <launcher.class>io.vertx.core.Launcher</launcher.class>
+    <lombok.version>1.18.22</lombok.version>
+    <fastjson.version>1.2.83</fastjson.version>
+    <commons-lang3.version>3.11</commons-lang3.version>
   </properties>
 
   <dependencyManagement>
@@ -77,6 +80,21 @@
       <version>${junit-jupiter.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -129,6 +147,23 @@
       </plugin>
     </plugins>
   </build>
-
+  <profiles>
+    <profile>
+      <id>mac</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-resolver-dns-native-macos</artifactId>
+          <classifier>osx-x86_64</classifier>
+          <!--<version>Should align with netty version that Vert.x uses</version>-->
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 
 </project>
