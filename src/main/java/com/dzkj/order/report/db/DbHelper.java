@@ -21,14 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 public class DbHelper {
     private final JsonObject object;
     private final Vertx vertx;
-    private static MySQLPool mySqlPool;
+    private MySQLPool mySqlPool;
 
     /**
      * 获取客户端
      *
      * @return MySQLPool
      */
-    public static MySQLPool client() {
+    public MySQLPool client() {
         return mySqlPool;
     }
 

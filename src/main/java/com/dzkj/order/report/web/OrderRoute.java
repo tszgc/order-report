@@ -1,15 +1,10 @@
 package com.dzkj.order.report.web;
 
-import io.vertx.core.Handler;
-import io.vertx.core.Promise;
+import com.dzkj.order.report.service.OrderService;
 import io.vertx.core.Vertx;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
+import io.vertx.mysqlclient.MySQLPool;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 描述：order router
@@ -19,21 +14,11 @@ import java.util.Map;
 @Slf4j
 public class OrderRoute {
 
-    public Router create(Vertx vertx) {
+    public Router create(Vertx vertx, MySQLPool mySQLPool) {
         Router orderRouter = Router.router(vertx);
-
-        Handler<RoutingContext> handler = this::report;
-        orderRouter.get("/report").handler(handler);
-
+        OrderService orderService = new OrderService(mySQLPool);
+        orderRouter.get("/report").handler(orderService::report);
         return orderRouter;
-    }
-
-    private void report(RoutingContext ctx) {
-        String host = ctx.request().host();
-        log.info(host);
-        Map<String, String> map = new HashMap<>();
-        map.put("name", "zgc");
-        ctx.json(map);
     }
 
 }

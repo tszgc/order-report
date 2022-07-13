@@ -8,6 +8,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
+import io.vertx.mysqlclient.MySQLPool;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,7 +18,6 @@ public class OrderReportVerticle extends AbstractVerticle {
     public void start(Promise<Void> startPromise) throws Exception {
         configureRouter()
             .compose(this::startHttpServer)
-            .compose(this::initDbHelper)
             .onSuccess(s -> startPromise.complete())
             .onFailure(startPromise::fail);
     }
@@ -31,7 +31,10 @@ public class OrderReportVerticle extends AbstractVerticle {
     }
 
     private Future<Router> configureRouter() {
-        return Future.succeededFuture(new MainRoute().create(vertx));
+        DbHelper dbHelper = new DbHelper(config().getJsonObject("mysql"), vertx);
+        dbHelper.afterPropertiesSet();
+        MySQLPool pool = dbHelper.client();
+        return Future.succeededFuture(new MainRoute().create(vertx, pool));
     }
 
     private Future<Void> initDbHelper(Void unused) {
