@@ -1,37 +1,37 @@
 package com.dzkj.order.report;
 
 import com.dzkj.order.report.db.DbHelper;
+import com.dzkj.order.report.prop.ConfigProperties;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 描述：mysql application
+ * 描述：main verticle
  * 作者：zgc
- * 时间：2022/7/10 15:34
+ * 时间：2022/7/12 20:36
  */
 @Slf4j
-public class OrderReportApplication {
+public class MainVerticle extends AbstractVerticle {
 
-
-    public static void main(String[] args) {
-        Vertx vertx = Vertx.vertx();
+    @Override
+    public void start(Promise<Void> startPromise) throws Exception {
         ConfigRetriever retriever = readYaml(vertx);
-
         retriever.getConfig(json -> {
             try {
-                JsonObject object = json.result();
-                DbHelper dbHelper = new DbHelper(object.getJsonObject("mysql"), vertx);
-                dbHelper.afterPropertiesSet();
-
-                DeploymentOptions options = new DeploymentOptions().setConfig(object);
-                vertx.deployVerticle(OrderReportVerticle.class.getName(), options);
+                DeploymentOptions opts = new DeploymentOptions()
+                    .setConfig(json.result());
+                vertx.deployVerticle(new OrderReportVerticle(), opts);
+                startPromise.complete();
             } catch (Exception ex) {
                 log.error("===> Vertx start fail: ", ex);
+                startPromise.fail("unable to load configuration.");
             }
         });
     }
@@ -42,7 +42,7 @@ public class OrderReportApplication {
             .setFormat("yaml")
             .setOptional(true)
             .setConfig(new JsonObject().put("path", "application.yaml"));
-
-        return ConfigRetriever.create(vertx, new ConfigRetrieverOptions().addStore(store));
+        ConfigRetrieverOptions opts = new ConfigRetrieverOptions().addStore(store);
+        return ConfigRetriever.create(vertx, opts);
     }
 }

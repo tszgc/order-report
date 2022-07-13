@@ -21,7 +21,7 @@ USE `vertx` ;
 -- Table `vertx`.`t_order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vertx`.`t_order` (
-  `id` BIGINT UNSIGNED NOT NULL COMMENT '订单ID',
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '订单ID',
   `user_id` BIGINT NOT NULL COMMENT '用户ID',
   `status` INT NOT NULL,
   `create_at` DATETIME NOT NULL COMMENT '下单时间',

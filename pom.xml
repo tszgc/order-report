@@ -22,7 +22,7 @@
         <vertx.version>4.3.2</vertx.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
 
-        <main.verticle>com.dzkj.order.report.OrderReportVerticle</main.verticle>
+        <main.verticle>com.dzkj.order.report.MainVerticle</main.verticle>
         <launcher.class>io.vertx.core.Launcher</launcher.class>
         <lombok.version>1.18.22</lombok.version>
         <fastjson.version>1.2.83</fastjson.version>
@@ -49,6 +49,10 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web</artifactId>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>

@@ -24,7 +24,7 @@
     </Appenders>
 
     <Loggers>
-        <AsyncLogger name="com.lance.mysql" level="debug" additivity="false" includeLocation="true">
+        <AsyncLogger name="com.dzkj.order.report" level="debug" additivity="false" includeLocation="true">
             <AppenderRef ref="Console"/>
             <appender-ref ref="FILE"/>
         </AsyncLogger>

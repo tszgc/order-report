@@ -12,7 +12,7 @@ public class TestOrderReportVerticle {
 
   @BeforeEach
   void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
-    vertx.deployVerticle(new OrderReportVerticle(), testContext.succeeding(id -> testContext.completeNow()));
+    vertx.deployVerticle(new MainVerticle(), testContext.succeeding(id -> testContext.completeNow()));
   }
 
   @Test
